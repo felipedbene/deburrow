@@ -1,0 +1,45 @@
+# F-Droid metadata for DeBurrow.
+# Submit by copying this file to fdroiddata as: metadata/dev.debene.gopher.yml
+# (https://gitlab.com/fdroid/fdroiddata) and opening a merge request.
+
+Categories:
+  - Internet
+License: MIT
+AuthorName: Felipe Debene
+WebSite: https://debene.dev
+SourceCode: https://github.com/felipedbene/deburrow
+IssueTracker: https://github.com/felipedbene/deburrow/issues
+
+AutoName: DeBurrow
+Description: |-
+    A modern, native Android client for the Gopher protocol, built with Kotlin and
+    Jetpack Compose.
+
+    Features:
+
+    * Browse Gopher menus, read text files, and view images
+    * ANSI-color and word-wrapping text viewer (colored .ansi art renders in color)
+    * Veronica / type-7 search with a query prompt and tappable results
+    * Address-bar navigation, bookmarks, history, and search history
+    * Downloads for binary items, response caching, and TLS (gophers://)
+    * Opens gopher:// and gophers:// links from other apps
+    * Material 3 theming and an adaptive launcher icon
+
+    No accounts, no trackers, no ads. A modern evolution of the 2010 J2ME client
+    "Pocket Gopher" by Felix Pleșoianu.
+
+RepoType: git
+Repo: https://github.com/felipedbene/deburrow.git
+
+Builds:
+  - versionName: "2.0"
+    versionCode: 1
+    commit: v2.0
+    subdir: app
+    gradle:
+      - yes
+
+AutoUpdateMode: Version v%v
+UpdateCheckMode: Tags
+CurrentVersion: "2.0"
+CurrentVersionCode: 1

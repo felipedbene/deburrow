@@ -53,7 +53,9 @@ jobs:
       - name: Stage APK
         run: |
           mkdir -p dist
-          cp app/build/outputs/apk/release/app-release.apk "dist/DeBurrow-${VERSION_TAG}.apk"
+          apk=$(ls app/build/outputs/apk/release/app-release*.apk | head -1)
+          echo "Using $apk"
+          cp "$apk" "dist/DeBurrow-${VERSION_TAG}.apk"
 
       - name: Publish GitHub Release
         env:

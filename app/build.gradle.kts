@@ -41,11 +41,10 @@ android {
                 getDefaultProguardFile("proguard-android-optimize.txt"),
                 "proguard-rules.pro"
             )
-            signingConfig = if (releaseKeystore != null) {
-                signingConfigs.getByName("release")
-            } else {
-                signingConfigs.getByName("debug")
-            }
+            // Sign with the release key when a keystore is provided (CI with secrets).
+            // Otherwise leave the APK UNSIGNED so F-Droid can build and sign it themselves;
+            // for a locally installable build use the debug variant or provide a keystore.
+            signingConfig = if (releaseKeystore != null) signingConfigs.getByName("release") else null
         }
     }
     compileOptions {

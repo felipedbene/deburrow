@@ -1,0 +1,18 @@
+DeBurrow is a modern, native Android client for the Gopher protocol — the pre-web,
+text-first way to browse "Gopherspace". Built with Kotlin and Jetpack Compose.
+
+Features:
+
+* Browse Gopher menus, read text files, and view images
+* ANSI-color and word-wrapping text viewer — colored .ansi art renders in color, with a
+  one-tap toggle to no-wrap for fixed-width maps and tables
+* Veronica / type-7 search with a query prompt and tappable results
+* Address-bar navigation, bookmarks, browse history, and search history
+* Downloads for binary items, response caching, and TLS (gophers://)
+* Opens gopher:// and gophers:// links from other apps, even while running
+* Material 3 theming and an adaptive (and Android 13 themed) launcher icon
+
+No accounts, no trackers, no ads. Free and open source (MIT).
+
+DeBurrow is a modern evolution of "Pocket Gopher", a 2010 J2ME client by Felix Pleșoianu,
+with parsing code and ideas by Nuno J. Silva.

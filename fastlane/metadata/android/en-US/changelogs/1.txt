@@ -1,0 +1,5 @@
+First release of DeBurrow.
+
+A modern Kotlin/Jetpack Compose rewrite of the Gopher client: menu/text/image browsing,
+ANSI-color + word-wrapping text viewer, Veronica search, bookmarks, history, downloads,
+caching, TLS (gophers://), deep links, and a branded adaptive icon.

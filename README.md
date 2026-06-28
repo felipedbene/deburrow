@@ -9,6 +9,10 @@
 Grab the latest APK from the [**Releases**](../../releases) page, tap it on your phone, and
 allow installing from unknown sources. (minSdk 24 / Android 7.0+.)
 
+Or track updates with [Obtainium](https://github.com/ImranR98/Obtainium) by adding this repo
+URL. Maintainer notes on signing & store submission (F-Droid / IzzyOnDroid) are in
+[DISTRIBUTION.md](DISTRIBUTION.md).
+
 ## Features
 
 - Browse Gopher menus, read text files, view images
