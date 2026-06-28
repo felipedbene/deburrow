@@ -70,6 +70,11 @@ jobs:
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
-          gh release create "${VERSION_TAG}" "dist/DeBurrow-${VERSION_TAG}.apk" \
-            --title "DeBurrow ${VERSION_TAG}" \
-            --generate-notes
+          asset="dist/DeBurrow-${VERSION_TAG}.apk"
+          if gh release view "${VERSION_TAG}" >/dev/null 2>&1; then
+            echo "Release ${VERSION_TAG} exists — replacing its APK asset."
+            gh release upload "${VERSION_TAG}" "$asset" --clobber
+          else
+            gh release create "${VERSION_TAG}" "$asset" \
+              --title "DeBurrow ${VERSION_TAG}" --generate-notes
+          fi
