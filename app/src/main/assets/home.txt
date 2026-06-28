@@ -1,0 +1,13 @@
+i===============================================
+i  gopher.debene.dev — Felipe's gopherholes
+i===============================================
+i
+iThree live services, served over Gopher:
+i
+1gopher-cta — live CTA 'L' trains		gopher.debene.dev	70
+1Phlog — the debene.dev blog over Gopher		gopher.debene.dev	7071
+1Ask the Deck — a live three-card tarot reading		gopher.debene.dev	7072
+i
+iTip: use the address bar to visit any gopher:// URL,
+ior open the menu for bookmarks and history.
+.

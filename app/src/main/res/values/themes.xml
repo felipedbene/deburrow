@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- Base theme; the actual colors are driven by Compose Material3 / dynamic color. -->
+    <style name="Theme.AndroidGopher" parent="android:Theme.Material.Light.NoActionBar" />
+</resources>

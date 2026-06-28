@@ -1,0 +1,11 @@
+MIDlet-1: Pocket Gopher, /nicubunu_Chipmunk_contour.png, ro.plesoianu.PocketGopher
+MIDlet-Description: Basic Java ME client for the Gopher protocol
+MIDlet-Icon: /nicubunu_Chipmunk_contour.png
+MIDlet-Info-URL: http://felix.plesoianu.ro/index.php/page:Software:PocketGopher
+MIDlet-Jar-Size: 14646
+MIDlet-Jar-URL: PocketGopher.jar
+MIDlet-Name: Pocket Gopher
+MIDlet-Vendor: Felix Pleșoianu
+MIDlet-Version: 1.0
+MicroEdition-Configuration: CLDC-1.1
+MicroEdition-Profile: MIDP-2.0

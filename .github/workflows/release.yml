@@ -1,0 +1,64 @@
+name: Release
+
+# Cut a release by pushing a tag, e.g.:  git tag v2.0 && git push origin v2.0
+on:
+  push:
+    tags: [ 'v*' ]
+  workflow_dispatch:
+    inputs:
+      tag:
+        description: 'Release tag (e.g. v2.0)'
+        required: true
+
+permissions:
+  contents: write
+
+jobs:
+  release:
+    runs-on: ubuntu-latest
+    env:
+      # 'true' only when the optional signing secret is configured (see README).
+      HAS_KEYSTORE: ${{ secrets.KEYSTORE_BASE64 != '' }}
+      VERSION_TAG: ${{ github.event.inputs.tag || github.ref_name }}
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Set up JDK 21
+        uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: '21'
+
+      - name: Set up Android SDK
+        uses: android-actions/setup-android@v3
+
+      - name: Set up Gradle
+        uses: gradle/actions/setup-gradle@v4
+
+      - name: Decode release keystore (optional)
+        if: env.HAS_KEYSTORE == 'true'
+        run: |
+          echo "${{ secrets.KEYSTORE_BASE64 }}" | base64 -d > "$RUNNER_TEMP/release.jks"
+          echo "DEBURROW_KEYSTORE_FILE=$RUNNER_TEMP/release.jks" >> "$GITHUB_ENV"
+
+      - name: Build release APK
+        env:
+          DEBURROW_KEYSTORE_PASSWORD: ${{ secrets.KEYSTORE_PASSWORD }}
+          DEBURROW_KEY_ALIAS: ${{ secrets.KEY_ALIAS }}
+          DEBURROW_KEY_PASSWORD: ${{ secrets.KEY_PASSWORD }}
+        run: |
+          chmod +x ./gradlew
+          ./gradlew testDebugUnitTest assembleRelease --stacktrace
+
+      - name: Stage APK
+        run: |
+          mkdir -p dist
+          cp app/build/outputs/apk/release/app-release.apk "dist/DeBurrow-${VERSION_TAG}.apk"
+
+      - name: Publish GitHub Release
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          gh release create "${VERSION_TAG}" "dist/DeBurrow-${VERSION_TAG}.apk" \
+            --title "DeBurrow ${VERSION_TAG}" \
+            --generate-notes

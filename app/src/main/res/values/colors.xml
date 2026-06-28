@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- debene.dev brand: periwinkle/indigo squircle from the app icon. -->
+    <color name="ic_launcher_background">#4551D2</color>
+</resources>
