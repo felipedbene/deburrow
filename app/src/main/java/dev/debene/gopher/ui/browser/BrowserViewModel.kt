@@ -191,7 +191,8 @@ class BrowserViewModel(
         }
         val bytes = gopher.fetch(request, forceReload)
         return when (request.type.kind) {
-            GopherType.Kind.MENU ->
+            // A type-7 search returns a Gopher menu of results — parse it like a directory.
+            GopherType.Kind.MENU, GopherType.Kind.SEARCH ->
                 Rendered(PageContent.Menu(GopherParser.parseMenu(bytes.toString(Charsets.UTF_8))), request.title)
             GopherType.Kind.IMAGE ->
                 Rendered(PageContent.Image(bytes), request.title, recordable = false)
