@@ -12,3 +12,5 @@ captures/
 key.properties
 keystore.properties
 /dist/
+*.jks
+*.keystore
