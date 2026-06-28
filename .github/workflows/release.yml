@@ -35,10 +35,19 @@ jobs:
       - name: Set up Gradle
         uses: gradle/actions/setup-gradle@v4
 
-      - name: Decode release keystore (optional)
+      - name: Decode & verify release keystore (optional)
         if: env.HAS_KEYSTORE == 'true'
         run: |
-          echo "${{ secrets.KEYSTORE_BASE64 }}" | base64 -d > "$RUNNER_TEMP/release.jks"
+          # Strip any whitespace/newlines the secret may have picked up, then decode.
+          printf '%s' "${{ secrets.KEYSTORE_BASE64 }}" | tr -d '[:space:]' | base64 -d > "$RUNNER_TEMP/release.jks"
+          if ! keytool -list -keystore "$RUNNER_TEMP/release.jks" \
+                 -storepass "${{ secrets.KEYSTORE_PASSWORD }}" \
+                 -alias "${{ secrets.KEY_ALIAS }}" >/dev/null 2>&1; then
+            echo "::error::Keystore could not be opened with the provided secrets."
+            echo "::error::Check KEYSTORE_PASSWORD and KEY_ALIAS. For a keytool .jks (PKCS12), KEY_PASSWORD must equal KEYSTORE_PASSWORD, and secrets must have no trailing spaces/newlines."
+            exit 1
+          fi
+          echo "Keystore verified."
           echo "DEBURROW_KEYSTORE_FILE=$RUNNER_TEMP/release.jks" >> "$GITHUB_ENV"
 
       - name: Build release APK
