@@ -7,22 +7,6 @@ SourceCode: https://github.com/felipedbene/deburrow
 IssueTracker: https://github.com/felipedbene/deburrow/issues
 
 AutoName: DeBurrow
-Description: |-
-  A modern, native Android client for the Gopher protocol, built with Kotlin and
-  Jetpack Compose.
-
-  Features:
-
-  * Browse Gopher menus, read text files, and view images
-  * ANSI-color and word-wrapping text viewer (colored .ansi art renders in color)
-  * Veronica / type-7 search with a query prompt and tappable results
-  * Address-bar navigation, bookmarks, history, and search history
-  * Downloads for binary items, response caching, and TLS (gophers://)
-  * Opens gopher:// and gophers:// links from other apps
-  * Material 3 theming and an adaptive launcher icon
-
-  No accounts, no trackers, no ads. A modern evolution of the 2010 J2ME client
-  "Pocket Gopher" by Felix Pleșoianu.
 
 RepoType: git
 Repo: https://github.com/felipedbene/deburrow.git
@@ -30,10 +14,12 @@ Repo: https://github.com/felipedbene/deburrow.git
 Builds:
   - versionName: 2.0.3
     versionCode: 3
-    commit: v2.0.3
+    commit: 946f6718c6a52d5c4fd3511a851a7a224f49d78d
     subdir: app
     gradle:
       - yes
+
+AllowedAPKSigningKeys: 10bfdeb0c04cc2cefff9e6c011205901d236bd1b8dd334fa908a21e89343262f
 
 AutoUpdateMode: Version
 UpdateCheckMode: Tags

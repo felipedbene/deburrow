@@ -39,7 +39,14 @@ This app is distributed via F-Droid, which builds it reproducibly from source. T
 - `android { dependenciesInfo { includeInApk = false; includeInBundle = false } }` in `app/build.gradle.kts` — omits the AGP dependency-metadata blob (IzzyOnDroid/F-Droid flag this).
 - `distributionSha256Sum` in `gradle/wrapper/gradle-wrapper.properties` — pins the Gradle distribution by checksum; update it alongside the `distributionUrl` whenever the Gradle version changes.
 
-The F-Droid build recipe lives at `fdroid/dev.debene.gopher.yml` (copied into `fdroiddata` for submission). Its `Builds` entry pins `versionName`/`versionCode`/`commit` (a `v<versionName>` tag) — keep those in sync with `defaultConfig` in `app/build.gradle.kts` and tag releases as `v<versionName>` (e.g. `v2.0.2`). `UpdateCheckMode: Tags` + `AutoUpdateMode: Version v%v` means F-Droid auto-detects new `v*` tags.
+The F-Droid build recipe lives at `fdroid/dev.debene.gopher.yml` (copied into `fdroiddata` for submission — keep this copy in sync with the metadata actually submitted there). Conventions the F-Droid CI enforces, learned the hard way during inclusion (MR [fdroiddata!41663](https://gitlab.com/fdroid/fdroiddata/-/merge_requests/41663)):
+
+- **No `Summary`/`Description` in the recipe** — they're pulled from the upstream Fastlane metadata (`fastlane/metadata/android/en-US/short_description.txt` / `full_description.txt`), which must exist on the release tag.
+- **`Builds[].commit` must be a full 40-char commit SHA**, not a `v*` tag or branch (reviewer requirement).
+- **`AutoName` must stay in the recipe** — `fdroid checkupdates` regenerates it from the manifest and that CI job fails on any resulting diff. (Only `Summary`/`Description` move to Fastlane; `AutoName` does not.)
+- **`AllowedAPKSigningKeys`** is the signing cert's SHA-256 (`apksigner verify --print-certs <signed.apk>`, colons stripped, lowercased) — it opts into Reproducible Builds so F-Droid verifies its build against our key instead of re-signing. One-way door; keep it.
+- Keep `versionName`/`versionCode` in sync with `defaultConfig` in `app/build.gradle.kts` and tag releases as `v<versionName>` (e.g. `v2.0.3`). `UpdateCheckMode: Tags` + `AutoUpdateMode: Version` auto-detects new `v*` tags.
+- Validate locally before pushing: `fdroid rewritemeta <pkg>` (must produce no diff — canonical form), `fdroid lint <pkg>`, and `check-jsonschema --schemafile <fdroiddata>/schemas/metadata.json <recipe>`. Pin `ruamel.yaml<0.17.22` in the fdroidserver venv or `rewritemeta` reformats long values (e.g. wraps `AllowedAPKSigningKeys`) differently than CI.
 
 ## Architecture
 
