@@ -56,7 +56,7 @@ by **Nuno J. Silva** (`gopher://sdf-eu.org/1/users/njsg`).
 The original protocol logic (menu parsing, URL parsing, the socket request/response dance) was
 ported to Kotlin and corrected where needed; the entire J2ME LCDUI layer was replaced with a
 Compose UI and a modern architecture. The original MIT license and copyright are retained — see
-[LICENSE](LICENSE). The original sources (`PocketGopher.java`, `.jar`, `.jad`) are kept in the
+[LICENSE](LICENSE). The original sources (`PocketGopher.java`, `.jad`) are kept in the
 repo root for reference.
 
 ## Project layout

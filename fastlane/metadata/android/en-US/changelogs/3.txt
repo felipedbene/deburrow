@@ -1,0 +1,4 @@
+F-Droid build cleanup.
+
+Remove the prebuilt PocketGopher.jar and the Gradle foojay toolchain resolver
+so the app builds cleanly from source on F-Droid. No user-facing changes.
