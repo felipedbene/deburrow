@@ -13,8 +13,8 @@ android {
         applicationId = "dev.debene.gopher"
         minSdk = 24
         targetSdk = 35
-        versionCode = 1
-        versionName = "2.0"
+        versionCode = 2
+        versionName = "2.0.2"
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
     }
@@ -61,6 +61,12 @@ android {
         resources {
             excludes += "/META-INF/{AL2.0,LGPL2.1}"
         }
+    }
+
+    // F-Droid / IzzyOnDroid: omit the AGP dependency-metadata blob from build artifacts.
+    dependenciesInfo {
+        includeInApk = false
+        includeInBundle = false
     }
 }
 
