@@ -1,0 +1,4 @@
+Packaging fixes for F-Droid / IzzyOnDroid.
+
+Omit the AGP dependency-info blob from the APK, pin the Gradle distribution by
+SHA-256 for reproducible builds. No user-facing changes.
