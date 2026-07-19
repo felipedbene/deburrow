@@ -2,6 +2,21 @@
 
 <p align="center">A modern, native <strong>Android Gopher client</strong> — Kotlin, Jetpack Compose, Coroutines, Room.</p>
 
+<p align="center">
+  <a href="LICENSE"><img alt="License: MIT" src="https://img.shields.io/badge/License-MIT-blue.svg"></a>
+  <img alt="Platform" src="https://img.shields.io/badge/Android-Kotlin%20%C2%B7%20Compose-3DDC84.svg">
+  <img alt="minSdk" src="https://img.shields.io/badge/minSdk-24-brightgreen.svg">
+  <a href="../../actions/workflows/ci.yml"><img alt="CI" src="../../actions/workflows/ci.yml/badge.svg"></a>
+</p>
+
+<table align="center">
+  <tr>
+    <td align="center"><img src="fastlane/metadata/android/en-US/images/phoneScreenshots/1_home.png" width="240" alt="Home"><br><sub>Home</sub></td>
+    <td align="center"><img src="fastlane/metadata/android/en-US/images/phoneScreenshots/2_ansi_color_map.png" width="240" alt="ANSI colour map"><br><sub>ANSI colour map</sub></td>
+    <td align="center"><img src="fastlane/metadata/android/en-US/images/phoneScreenshots/3_text_wrap.png" width="240" alt="Text wrap"><br><sub>Text wrap</sub></td>
+  </tr>
+</table>
+
 ---
 
 ## Download
@@ -89,3 +104,10 @@ Or open the project in Android Studio and Run.
 ## License
 
 MIT — see [LICENSE](LICENSE).
+
+---
+### Part of the gopher constellation
+**Servers & tools:** [gopher-core](https://github.com/felipedbene/gopher-core) · [gopher-cta](https://github.com/felipedbene/gopher-cta) · [gopher-blog](https://github.com/felipedbene/gopher-blog) · [gopher-askthedeck](https://github.com/felipedbene/gopher-askthedeck) · [gopher-spot](https://github.com/felipedbene/gopher-spot) · [the-economist-epub](https://github.com/felipedbene/the-economist-epub)
+**Clients:** [casquinha](https://github.com/felipedbene/casquinha) (Mac OS 9) · [detoca](https://github.com/felipedbene/detoca) (OS X 10.6) · [degelato](https://github.com/felipedbene/degelato) (OS X 10.5 PPC) · [deburrow](https://github.com/felipedbene/deburrow) (Android)
+**Protocol notes:** [fhb](https://github.com/felipedbene/fhb)
+---
