@@ -19,7 +19,7 @@ https://github.com/felipedbene/deburrow
 ```
 
 Maintainer notes on signing & store submission (F-Droid / IzzyOnDroid) are in
-[DISTRIBUTION.md](DISTRIBUTION.md).
+[CLAUDE.md](CLAUDE.md).
 
 ## Features
 
