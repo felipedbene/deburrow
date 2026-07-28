@@ -42,8 +42,19 @@ jobs:
       - name: Set up Gradle
         uses: gradle/actions/setup-gradle@v4
 
-      - name: Decode & verify release keystore (optional)
-        if: env.HAS_KEYSTORE == 'true'
+      # A release asset MUST be signed: it is the reference binary F-Droid
+      # byte-compares against, and AllowedAPKSigningKeys pins our cert. Without
+      # a keystore `assembleRelease` silently produces an unsigned APK, so fail
+      # loudly here rather than publishing one.
+      - name: Require the release keystore
+        run: |
+          if [ "${HAS_KEYSTORE}" != "true" ]; then
+            echo "::error::KEYSTORE_BASE64 is unset or empty — refusing to publish an unsigned release APK."
+            echo "::error::Re-add the secret (base64 of the release .jks) and re-run."
+            exit 1
+          fi
+
+      - name: Decode & verify release keystore
         run: |
           # Strip any whitespace/newlines the secret may have picked up, then decode.
           printf '%s' "${{ secrets.KEYSTORE_BASE64 }}" | tr -d '[:space:]' | base64 -d > "$RUNNER_TEMP/release.jks"
@@ -85,6 +96,32 @@ jobs:
           echo "APK revision:  ${actual:-<none embedded>}"
           if [ -n "$actual" ] && [ "$actual" != "$expected" ]; then
             echo "::error::APK was built from $actual but ${VERSION_TAG} is $expected — refusing to publish."
+            exit 1
+          fi
+
+      # AllowedAPKSigningKeys in the F-Droid recipe pins this exact cert; a
+      # mismatch (or a missing signature) breaks the reproducible-build opt-in.
+      - name: Verify APK is signed with the expected key
+        env:
+          # SHA-256 of the release signing cert — same value as AllowedAPKSigningKeys
+          # in fdroid/dev.debene.gopher.yml. Public information, not a secret.
+          EXPECTED_CERT_SHA256: 353db8b0a3c94c001eb71114b8640befa35e38760ee6c3ca4f301c7aedc5a1dd
+        run: |
+          apk="dist/DeBurrow-${VERSION_TAG}.apk"
+          apksigner=$(ls -d "$ANDROID_HOME"/build-tools/*/apksigner 2>/dev/null | sort -V | tail -1)
+          if [ -z "$apksigner" ]; then
+            echo "::error::apksigner not found under $ANDROID_HOME/build-tools."
+            exit 1
+          fi
+          if ! "$apksigner" verify --print-certs "$apk" > certs.txt; then
+            echo "::error::$apk is not a validly signed APK."
+            exit 1
+          fi
+          actual=$(grep -i 'certificate SHA-256 digest' certs.txt | head -1 | awk '{print $NF}' | tr 'A-Z' 'a-z')
+          echo "expected cert: $EXPECTED_CERT_SHA256"
+          echo "actual cert:   ${actual:-<none>}"
+          if [ "$actual" != "$EXPECTED_CERT_SHA256" ]; then
+            echo "::error::APK signing cert does not match AllowedAPKSigningKeys — refusing to publish."
             exit 1
           fi
 
