@@ -1,5 +1,5 @@
 Categories:
-  - Internet
+  - Browser
 License: MIT
 AuthorName: Felipe Debene
 WebSite: https://debene.dev
@@ -10,6 +10,7 @@ AutoName: DeBurrow
 
 RepoType: git
 Repo: https://github.com/felipedbene/deburrow.git
+Binaries: https://github.com/felipedbene/deburrow/releases/download/v%v/DeBurrow-v%v.apk
 
 Builds:
   - versionName: 2.0.3
@@ -19,7 +20,7 @@ Builds:
     gradle:
       - yes
 
-AllowedAPKSigningKeys: 10bfdeb0c04cc2cefff9e6c011205901d236bd1b8dd334fa908a21e89343262f
+AllowedAPKSigningKeys: 353db8b0a3c94c001eb71114b8640befa35e38760ee6c3ca4f301c7aedc5a1dd
 
 AutoUpdateMode: Version
 UpdateCheckMode: Tags
