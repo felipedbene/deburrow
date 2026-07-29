@@ -1,0 +1,5 @@
+Readable ANSI art on the light theme.
+
+ANSI pages now render on a black backdrop, the background the xterm palette
+they use was drawn against. Previously the light end of that palette (grey and
+white text) was painted onto the light Material surface and was near-invisible.
