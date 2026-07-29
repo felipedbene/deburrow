@@ -1,5 +1,6 @@
 package dev.debene.gopher.ui.browser
 
+import androidx.compose.foundation.background
 import androidx.compose.foundation.horizontalScroll
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
@@ -35,7 +36,8 @@ import androidx.compose.ui.unit.dp
  * - Long lines **wrap** by default (readable prose). A toggle switches to no-wrap +
  *   horizontal scroll for fixed-width ASCII art / maps.
  * - **ANSI** color codes (`ESC[…m`) in `.ansi` files are parsed into colored text instead
- *   of showing as escape-sequence gibberish.
+ *   of showing as escape-sequence gibberish. ANSI pages render on a forced black backdrop
+ *   (see [AnsiBackground]) rather than the Material surface.
  */
 @Composable
 fun TextViewer(text: String, modifier: Modifier = Modifier) {
@@ -64,7 +66,11 @@ fun TextViewer(text: String, modifier: Modifier = Modifier) {
     val vScroll = rememberScrollState()
     val hScroll = rememberScrollState()
 
-    Column(modifier.fillMaxSize()) {
+    Column(
+        modifier
+            .fillMaxSize()
+            .then(if (isAnsi) Modifier.background(AnsiBackground) else Modifier)
+    ) {
         FilledIconToggleButton(
             checked = wrap,
             onCheckedChange = { wrap = it },
@@ -84,6 +90,7 @@ fun TextViewer(text: String, modifier: Modifier = Modifier) {
 
         Text(
             text = annotated,
+            color = if (isAnsi) AnsiForeground else Color.Unspecified,
             fontFamily = FontFamily.Monospace,
             style = MaterialTheme.typography.bodySmall,
             softWrap = wrap,
@@ -91,3 +98,15 @@ fun TextViewer(text: String, modifier: Modifier = Modifier) {
         )
     }
 }
+
+/**
+ * ANSI art is authored for a black terminal, and [AnsiParser] emits the fixed xterm palette
+ * (unaware of the app theme). Painting that onto the light Material surface makes the light end
+ * of the palette — grey `argb(229,229,229)` and white `argb(255,255,255)` — near-invisible, so
+ * ANSI pages get the background their colors were chosen against. Pure black matches the
+ * palette's own color 0, so `ESC[40m` fills blend instead of showing as boxes.
+ */
+private val AnsiBackground = Color(0xFF000000)
+
+/** Terminal default foreground (xterm color 7) for runs with no explicit SGR color. */
+private val AnsiForeground = Color(0xFFE5E5E5)
