@@ -13,13 +13,6 @@ Repo: https://github.com/felipedbene/deburrow.git
 Binaries: https://github.com/felipedbene/deburrow/releases/download/v%v/DeBurrow-v%v.apk
 
 Builds:
-  - versionName: 2.0.3
-    versionCode: 3
-    commit: 946f6718c6a52d5c4fd3511a851a7a224f49d78d
-    subdir: app
-    gradle:
-      - yes
-
   - versionName: 2.0.4
     versionCode: 4
     commit: f3e9c906fd1cd6f62894c078baf0b4b6fead562c
